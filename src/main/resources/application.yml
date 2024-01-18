@@ -1,0 +1,28 @@
+server:
+  port: 9095
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: INVENTORY-APP
+          uri: lb://INVENTORY-APP
+          predicates:
+            - Path=/inventoryapp/**
+        - id: PRODUCT-CATALOG
+          uri: lb://PRODUCT-CATALOG
+          predicates:
+            - Path=/catalog/**
+        - id: PRODUCT-APP
+          uri: lb://PRODUCT-APP
+          predicates:
+            - Path=/productsapp/**
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
